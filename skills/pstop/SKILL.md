@@ -1,7 +1,7 @@
 ---
 name: pstop
-description: This skill should be used when the user asks to "show running processes", "find what's using CPU", "check memory usage", "kill a process", "show process tree", "find developer processes", "watch a process", "what's draining battery", "search for a process", "alert on high CPU", "alert on high memory", "show CPU sparklines", or mentions pstop, process management, top, htop, activity monitor, resource hogs, or threshold alerting.
-version: 1.1.0
+description: This skill should be used when the user asks to "show running processes", "find what's using CPU", "check memory usage", "kill a process", "show process tree", "find developer processes", "watch a process", "what's draining battery", "search for a process", "alert on high CPU", "alert on high memory", "show CPU sparklines", "crash reports", "app crashes", "app hangs", "kernel panics", "diagnostic reports", or mentions pstop, process management, top, htop, activity monitor, resource hogs, threshold alerting, or crash diagnostics.
+version: 1.2.0
 allowed-tools: Bash(pstop:*)
 ---
 
@@ -30,6 +30,32 @@ Analyze the output above. Flag any processes consuming excessive CPU (>50%) or m
 | `pstop dev` | Group processes by dev stack (Node, Python, Docker, etc.) | `pstop dev` |
 | `pstop watch <pid>` | Live-monitor a process | `pstop watch 1234 --interval 5` |
 | `pstop watch --alert` | Threshold-based alerting | `pstop watch --alert --cpu 80 --mem 90` |
+| `pstop crashes` | Recent crash reports and app hangs | `pstop crashes --last 7d` |
+| `pstop crashes info <path>` | Detailed crash report with backtrace | `pstop crashes info /path/to/report.ips` |
+
+## Crash Reports
+
+View recent crash reports, app hangs, and kernel panics:
+
+```bash
+# Show recent crash reports
+pstop crashes
+
+# Filter by time range
+pstop crashes --last 7d
+
+# Filter by process name
+pstop crashes --process Safari
+
+# Combine filters
+pstop crashes --last 24h --process node
+
+# View detailed crash report with backtrace
+pstop crashes info /Library/Logs/DiagnosticReports/Safari_2026-02-15.ips
+
+# JSON output for scripting
+pstop crashes --json
+```
 
 ## Threshold Alerting
 

@@ -1,7 +1,7 @@
 ---
 name: macbroom
-description: This skill should be used when the user asks to "clean up Mac", "free disk space", "remove system caches", "find duplicate files", "uninstall an app completely", "visualize disk usage", "clean Xcode caches", "remove node_modules", "clean Docker", "schedule cleanup", "cleanup report", "watch disk space", "monitor free space", "filter by size", or mentions macbroom, system cleanup, disk space, junk files, cache clearing, disk monitoring, or cleanup history.
-version: 1.1.0
+description: This skill should be used when the user asks to "clean up Mac", "free disk space", "remove system caches", "find duplicate files", "uninstall an app completely", "visualize disk usage", "clean Xcode caches", "remove node_modules", "clean Docker", "schedule cleanup", "cleanup report", "watch disk space", "monitor free space", "filter by size", "disk trends", "storage forecast", "disk full prediction", "storage growth", or mentions macbroom, system cleanup, disk space, junk files, cache clearing, disk monitoring, cleanup history, or storage trends.
+version: 1.2.0
 allowed-tools: Bash(macbroom:*)
 ---
 
@@ -33,6 +33,32 @@ Analyze the scan results above. Present a summary of reclaimable space by catego
 | `macbroom schedule enable` | Enable scheduled cleaning | `macbroom schedule enable` |
 | `macbroom schedule disable` | Disable scheduled cleaning | `macbroom schedule disable` |
 | `macbroom schedule status` | Show schedule status | `macbroom schedule status` |
+| `macbroom trends` | Storage usage trends from snapshots | `macbroom trends --last 30d` |
+| `macbroom trends --forecast` | Predict when disk will fill up | `macbroom trends --forecast` |
+| `macbroom trends record` | Capture storage snapshot (for lanchr agent) | `macbroom trends record` |
+
+## Storage Trends
+
+Track storage usage over time and forecast disk capacity:
+
+```bash
+# View storage usage trends
+macbroom trends
+
+# Filter to last 30 days
+macbroom trends --last 30d
+
+# Predict when disk will fill up
+macbroom trends --forecast
+
+# Capture a storage snapshot (for periodic recording via lanchr agent)
+macbroom trends record
+
+# JSON output for scripting
+macbroom trends --json
+```
+
+Combine with `lanchr create --template monitor-disk` to automatically record storage snapshots and alert on predicted disk full dates.
 
 ## Size Filtering
 
@@ -77,6 +103,8 @@ macbroom dupes ~/Documents --json
 macbroom stats --json
 macbroom spacelens ~ --json
 macbroom report --json
+macbroom trends --json
+macbroom trends --forecast --json
 ```
 
 ## Scanner Categories
