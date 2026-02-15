@@ -1,11 +1,11 @@
 {
   "name": "macos-toolkit",
-  "version": "1.0.0",
-  "description": "Skills for managing macOS systems with macfig, netwhiz, whport, lanchr, macbroom, and updater CLI tools",
+  "version": "1.1.0",
+  "description": "Skills for managing macOS systems with macfig, netwhiz, whport, lanchr, macbroom, updater, pstop, macdog, and bltctl CLI tools",
   "author": {
     "name": "lu-zhengda"
   },
   "repository": "https://github.com/lu-zhengda/macos-toolkit",
   "license": "MIT",
-  "keywords": ["macos", "system", "cleanup", "network", "defaults", "launchd"]
+  "keywords": ["macos", "system", "cleanup", "network", "defaults", "launchd", "process", "security", "bluetooth"]
 }

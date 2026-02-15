@@ -4,9 +4,9 @@
 [![Platform: macOS](https://img.shields.io/badge/Platform-macOS-lightgrey.svg)](https://github.com/lu-zhengda/macos-toolkit)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-blueviolet.svg)](https://github.com/lu-zhengda/macos-toolkit)
 
-A Claude Code plugin that gives Claude native macOS system management capabilities — network diagnostics, disk cleanup, port management, app updates, launch agents, and system defaults.
+A Claude Code plugin that gives Claude native macOS system management capabilities — network diagnostics, disk cleanup, port management, app updates, launch agents, system defaults, process monitoring, security auditing, and Bluetooth management.
 
-**Ask Claude naturally:** "What's using port 3000?", "Clean up my Mac", "Check for app updates", "Why is my WiFi slow?" — and it runs the right tool automatically.
+**Ask Claude naturally:** "What's using port 3000?", "Clean up my Mac", "Check for app updates", "Why is my WiFi slow?", "What's eating my CPU?", "Run a security audit", "Check my AirPods battery" — and it runs the right tool automatically.
 
 ## Install
 
@@ -19,7 +19,7 @@ Then install the CLI tools:
 
 ```bash
 brew tap lu-zhengda/tap
-brew install macfig netwhiz whport lanchr macbroom updater
+brew install macfig netwhiz whport lanchr macbroom updater pstop macdog bltctl
 ```
 
 ## Tools
@@ -166,6 +166,62 @@ WARNING (71)
 Run 'lanchr list' to see all services.
 ```
 
+### pstop — Process Explorer
+
+Browse, search, and manage processes with a developer-friendly CLI.
+
+```
+$ pstop top -n 5
+PID    NAME           CPU%    MEM       USER
+1234   node           45.2%   512.0 MB  user
+5678   Chrome         12.3%   1.2 GB    user
+9012   Xcode          8.7%    2.1 GB    user
+3456   docker         5.1%    384.0 MB  user
+7890   Terminal       2.3%    128.0 MB  user
+
+$ pstop dev
+Node.js (3 processes, 612 MB)
+Docker (5 processes, 1.2 GB)
+Python (1 process, 45 MB)
+```
+
+### macdog — Security & Privacy Suite
+
+Audit your security posture, manage firewall rules, review privacy permissions, and harden your system.
+
+```
+$ macdog audit
+macOS Security Audit
+====================
+
+Grade: B
+
+[PASS] FileVault disk encryption is enabled
+[PASS] System Integrity Protection is enabled
+[FAIL] Firewall is disabled
+[PASS] Gatekeeper is enabled
+[FAIL] Remote Login (SSH) is enabled
+[PASS] Screen lock is enabled
+```
+
+### bltctl — Bluetooth Manager
+
+Browse, connect, and manage Bluetooth devices with battery monitoring and diagnostics.
+
+```
+$ bltctl list
+NAME                TYPE        CONNECTED  BATTERY
+AirPods Pro         Headphones  Yes        85%
+Magic Keyboard      Keyboard    Yes        62%
+Magic Trackpad      Trackpad    Yes        91%
+Old Headphones      Headphones  No         -
+
+$ bltctl battery
+AirPods Pro         85%
+Magic Keyboard      62%
+Magic Trackpad      91%
+```
+
 ## Skills
 
 Each tool is exposed as a skill that auto-triggers from natural language and is available as a slash command:
@@ -178,6 +234,9 @@ Each tool is exposed as a skill that auto-triggers from natural language and is 
 | **updater** | "check for updates", "update Firefox", "find unused apps" | `/macos-toolkit:updater` |
 | **macfig** | "show hidden files", "speed up the Dock", "apply dev preset" | `/macos-toolkit:macfig` |
 | **lanchr** | "list launch agents", "create a scheduled task", "debug a daemon" | `/macos-toolkit:lanchr` |
+| **pstop** | "what's eating CPU", "show process tree", "find node processes" | `/macos-toolkit:pstop` |
+| **macdog** | "run security audit", "check firewall", "review privacy permissions" | `/macos-toolkit:macdog` |
+| **bltctl** | "list Bluetooth devices", "check AirPods battery", "fix Bluetooth" | `/macos-toolkit:bltctl` |
 
 ## Prerequisites
 
