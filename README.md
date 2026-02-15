@@ -4,9 +4,9 @@
 [![Platform: macOS](https://img.shields.io/badge/Platform-macOS-lightgrey.svg)](https://github.com/lu-zhengda/macos-toolkit)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-blueviolet.svg)](https://github.com/lu-zhengda/macos-toolkit)
 
-A Claude Code plugin that gives Claude native macOS system management capabilities — network diagnostics, disk cleanup, port management, app updates, launch agents, system defaults, process monitoring, security auditing, and Bluetooth management.
+A Claude Code plugin that gives Claude native macOS system management capabilities — network diagnostics, disk cleanup, port management, app updates, launch agents, system defaults, process monitoring, security auditing, Bluetooth management, and environment control.
 
-**Ask Claude naturally:** "What's using port 3000?", "Clean up my Mac", "Check for app updates", "Why is my WiFi slow?", "What's eating my CPU?", "Run a security audit", "Check my AirPods battery" — and it runs the right tool automatically.
+**Ask Claude naturally:** "What's using port 3000?", "Clean up my Mac", "Check for app updates", "Why is my WiFi slow?", "What's eating my CPU?", "Run a security audit", "Check my AirPods battery", "Set up for a meeting" — and it runs the right tool automatically.
 
 ## Install
 
@@ -19,7 +19,7 @@ Then install the CLI tools:
 
 ```bash
 brew tap lu-zhengda/tap
-brew install macfig netwhiz whport lanchr macbroom updater pstop macdog bltctl
+brew install macfig netwhiz whport lanchr macbroom updater pstop macdog bltctl macctl
 ```
 
 ## Tools
@@ -213,6 +213,28 @@ STATUS  NAME                  TYPE        ADDRESS            BATTERY
 ○       Beats Studio Buds     Headphones  F4:34:F0:96:DD:A0  [██████████] 100%
 ```
 
+### [macctl](https://github.com/lu-zhengda/macctl) — Environment Controller
+
+Manage power, display, audio, focus modes, and apply compound presets from the CLI.
+
+```
+$ macctl power status
+Battery:       100%
+State:         on AC power
+Time:          fully charged
+Cycles:        351
+Temperature:   30.1 C
+Capacity:      5059 / 5209 mAh
+
+$ macctl preset
+NAME           DESCRIPTION
+deep-work      Focus on, display brightness 50%, audio mute
+meeting        Focus on (allow calls), audio unmute
+present        Focus on, display brightness 100%
+chill          Focus off, Night Shift on, display brightness 40%, audio volume 30%
+battery-saver  Display brightness 30%, show power hogs
+```
+
 ## Skills
 
 Each tool is exposed as a skill that auto-triggers from natural language and is available as a slash command:
@@ -228,6 +250,7 @@ Each tool is exposed as a skill that auto-triggers from natural language and is 
 | **pstop** | "what's eating CPU", "show process tree", "find node processes" | `/macos-toolkit:pstop` |
 | **macdog** | "run security audit", "check firewall", "review privacy permissions" | `/macos-toolkit:macdog` |
 | **bltctl** | "list Bluetooth devices", "check AirPods battery", "fix Bluetooth" | `/macos-toolkit:bltctl` |
+| **macctl** | "check battery", "set brightness", "apply deep-work preset", "mute audio" | `/macos-toolkit:macctl` |
 
 ## Prerequisites
 
