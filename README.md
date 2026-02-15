@@ -4,9 +4,9 @@
 [![Platform: macOS](https://img.shields.io/badge/Platform-macOS-lightgrey.svg)](https://github.com/lu-zhengda/macos-toolkit)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-blueviolet.svg)](https://github.com/lu-zhengda/macos-toolkit)
 
-A Claude Code plugin that gives Claude native macOS system management capabilities — network diagnostics, disk cleanup, port management, app updates, launch agents, system defaults, process monitoring, security auditing, Bluetooth management, and environment control.
+A Claude Code plugin that gives Claude native macOS system management capabilities — network diagnostics, disk cleanup, port management, app updates, launch agents, system defaults, process monitoring, security auditing, Bluetooth management, environment control, and email.
 
-**Ask Claude naturally:** "What's using port 3000?", "Clean up my Mac", "Check for app updates", "Why is my WiFi slow?", "What's eating my CPU?", "Run a security audit", "Check my AirPods battery", "Set up for a meeting" — and it runs the right tool automatically.
+**Ask Claude naturally:** "What's using port 3000?", "Clean up my Mac", "Check for app updates", "Why is my WiFi slow?", "What's eating my CPU?", "Run a security audit", "Check my AirPods battery", "Set up for a meeting", "Check my email" — and it runs the right tool automatically.
 
 ## Install
 
@@ -19,7 +19,7 @@ Then install the CLI tools:
 
 ```bash
 brew tap lu-zhengda/tap
-brew install macfig netwhiz whport lanchr macbroom updater pstop macdog bltctl macctl
+brew install macfig netwhiz whport lanchr macbroom updater pstop macdog bltctl macctl termail
 ```
 
 ## Tools
@@ -235,6 +235,22 @@ chill          Focus off, Night Shift on, display brightness 40%, audio volume 3
 battery-saver  Display brightness 30%, show power hogs
 ```
 
+### [termail](https://github.com/lu-zhengda/termail) — Terminal Email Client
+
+Read, compose, reply, search, and manage Gmail from the command line with full-text search and multi-account support.
+
+```
+$ termail list --limit 3
+UNREAD  FROM          SUBJECT                                     DATE          MSGS  THREAD_ID
+*       GitHub        [GitHub] A personal access token has been…   Feb 14, 2026  4     19c5d4f2ea3c4478
+        Citi Alerts   Your daily alerts summary                   Feb 15, 2026  1     19c5ecc5e553f0b6
+        Airmart Team  Your order has been completed                Feb 15, 2026  1     19c5f633501ea8e9
+
+$ termail search "quarterly report"
+FROM     SUBJECT                    DATE          ID
+Finance  Q4 Quarterly Report 2025   Jan 10, 2026  19c12345abcdef
+```
+
 ## Skills
 
 Each tool is exposed as a skill that auto-triggers from natural language and is available as a slash command:
@@ -251,6 +267,7 @@ Each tool is exposed as a skill that auto-triggers from natural language and is 
 | **macdog** | "run security audit", "check firewall", "review privacy permissions" | `/macos-toolkit:macdog` |
 | **bltctl** | "list Bluetooth devices", "check AirPods battery", "fix Bluetooth" | `/macos-toolkit:bltctl` |
 | **macctl** | "check battery", "set brightness", "apply deep-work preset", "mute audio" | `/macos-toolkit:macctl` |
+| **termail** | "check my email", "send an email", "search emails", "reply to email" | `/macos-toolkit:termail` |
 
 ## Prerequisites
 

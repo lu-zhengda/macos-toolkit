@@ -7,11 +7,11 @@ allowed-tools: Bash(termail:*)
 
 # termail — Terminal Email Client
 
-List recent email threads:
+Sync and list recent email threads:
 
-!`termail list --limit 5 2>&1 || echo "termail not installed — brew install lu-zhengda/tap/termail"`
+!`termail sync 2>&1 && termail list --limit 5 2>&1 || echo "termail not installed — brew install lu-zhengda/tap/termail"`
 
-Analyze the output above. Summarize unread threads (marked with `*`), highlight anything that looks urgent or time-sensitive, and offer to read specific threads with `termail read <thread-id>`, reply, compose, or search.
+Analyze the output above. Summarize unread threads (marked with `*`), highlight anything that looks urgent or time-sensitive, and offer to read specific threads with `termail read <thread-id>`, reply, compose, or search. If sync fails with a credentials error, guide the user through `termail account add`.
 
 ## Commands — Reading
 
@@ -19,8 +19,10 @@ Analyze the output above. Summarize unread threads (marked with `*`), highlight 
 |---------|---------|---------|
 | `termail list` | List email threads | `termail list --limit 20` |
 | `termail list --label <label>` | Filter by label | `termail list --label SENT --limit 10` |
+| `termail list --account <email>` | List from a specific account | `termail list --account work@gmail.com` |
 | `termail read <thread-id>` | Read a full thread | `termail read 19c5d4f2ea3c4478` |
 | `termail search "<query>"` | Full-text search (FTS5) | `termail search "quarterly report"` |
+| `termail search --account <email>` | Search a specific account | `termail search "invoice" --account work@gmail.com` |
 | `termail labels` | List all labels | `termail labels` |
 
 ## Commands — Composing
