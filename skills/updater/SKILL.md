@@ -2,21 +2,16 @@
 name: updater
 description: This skill should be used when the user asks to "check for app updates", "update my apps", "update macOS applications", "pin an app version", "rollback an update", "find unused apps", "schedule update checks", "install an app via brew", "manage app update sources", or mentions updater, app updates, outdated apps, Homebrew cask updates, or App Store updates.
 version: 1.0.0
+allowed-tools: Bash(updater:*)
 ---
 
 # updater — macOS App Update Manager
 
-## Overview
+Check for available app updates:
 
-updater manages application updates across multiple sources: App Store, Homebrew (cask + formula), Sparkle, GitHub releases, Electron auto-update, Setapp, JetBrains Toolbox, and Adobe Creative Cloud. It supports pinning, rollback, scheduling, and unused app detection.
+!`updater check 2>&1 || echo "updater not installed — brew install lu-zhengda/tap/updater"`
 
-## Availability
-
-```bash
-command -v updater >/dev/null || echo "NOT INSTALLED"
-```
-
-If not installed: `brew install lu-zhengda/tap/updater`
+Analyze the output above. List outdated apps with current vs available versions. Ask which apps to update, or offer `updater update --all` to update everything.
 
 ## Commands
 
