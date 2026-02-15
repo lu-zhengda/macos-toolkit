@@ -22,18 +22,29 @@ brew tap lu-zhengda/tap
 brew install macfig netwhiz whport lanchr macbroom updater
 ```
 
-## CLI Tools
+## Tools
 
 ### whport — Port & Process Manager
 
 Find what's listening on any port, get detailed process info, and kill processes by port.
 
 ```
-$ whport list --port 3000
-PORT   PID    PROCESS   USER    PROTOCOL
-3000   12345  node      zhengda tcp
+$ whport list
+PORT   PROTO  PID    PROCESS    USER    STATE
+5000   TCP    644    ControlCe  user    LISTEN
+7000   TCP    644    ControlCe  user    LISTEN
+7265   TCP    76742  Raycast    user    LISTEN
+26443  TCP    87971  OrbStack   user    LISTEN
 
-$ whport kill 3000
+$ whport info 5000
+Port:        5000/TCP
+State:       LISTEN
+Process:     ControlCe (PID 644)
+Command:     /System/Library/CoreServices/ControlCenter.app/Contents/MacOS/ControlCenter
+User:        user
+CPU:         0.0%
+Memory:      116.0 MB (RSS)
+Parent PID:  1
 ```
 
 ### netwhiz — Network Diagnostics
@@ -42,12 +53,30 @@ Full network overview, WiFi signal analysis, DNS management, speed tests, and LA
 
 ```
 $ netwhiz info
-Interface: en0 (Wi-Fi)  Status: active
-Local IP:  192.168.1.42  Public IP: 203.0.113.1
-Gateway:   192.168.1.1   DNS: 1.1.1.1, 1.0.0.1
+Network Overview
+════════════════
 
-$ netwhiz speed
-Download: 245.3 Mbps
+  Interface:     en0
+  Status:        Active
+  IP Address:    192.168.1.42
+  Subnet Mask:   255.255.252.0
+  Router:        192.168.1.1
+  DNS Servers:   (auto)
+
+  Public IP:     203.0.113.1
+
+$ netwhiz wifi
+WiFi Information
+════════════════
+
+  SSID:          MyNetwork
+  Channel:       52 (5GHz)
+  RSSI:          -44 dBm (Excellent)
+  Noise:         -89 dBm
+  SNR:           45 dB
+  Tx Rate:       864 Mbps
+  Security:      WPA2 Personal
+  Country:       US
 ```
 
 ### macbroom — System Cleanup
@@ -56,11 +85,17 @@ Scan for reclaimable disk space across system caches, Xcode, Docker, node_module
 
 ```
 $ macbroom scan
-System caches    1.2 GB
-Xcode derived    4.8 GB
-Docker images    3.1 GB
-node_modules     2.4 GB
-Total            11.5 GB reclaimable
+Scanning...
+
+System Junk (8.2 GB, 130 items)
+Browser Cache (1.8 GB, 3 items)
+Homebrew (2.1 GB, 117 items)
+Go (2.2 GB, 2 items)
+Node.js (453.0 MB, 1 items)
+Xcode Junk (558.4 KB, 6 items)
+Docker (0 B, 1 items)
+
+Total reclaimable: 14.7 GB
 ```
 
 ### updater — App Update Manager
@@ -69,9 +104,12 @@ Check for outdated apps, update individually or in bulk, pin versions, and rollb
 
 ```
 $ updater check
-Firefox     128.0 → 129.0   (brew cask)
-VS Code     1.89  → 1.90    (brew cask)
-Slack       4.38  → 4.39    (App Store)
+NAME                  CURRENT        LATEST         SOURCE     STATUS
+GitHub Desktop        3.5.4          3.5.4          github     ok
+Google Chrome         145.0.7632.76  145.0.7632.76  homebrew   ok
+iTerm2                3.6.6          3.6.6          sparkle    ok
+Code                  1.109.3        1.109.2        github     ok
+Xcode                 26.2           26.2           app store  ok
 ```
 
 ### macfig — macOS Defaults Manager
@@ -79,8 +117,29 @@ Slack       4.38  → 4.39    (App Store)
 Browse and change hidden macOS preferences with presets for common developer setups.
 
 ```
-$ macfig preset dev-setup
-Applied: faster dock, show hidden files, fast key repeat, no animations
+$ macfig list
+Categories:
+
+  🚢 Dock  (10 settings)
+  📁 Finder  (9 settings)
+  📷 Screenshots  (5 settings)
+  💻 Keyboard  (6 settings)
+  🤚 Trackpad  (3 settings)
+  🎬 Animations  (2 settings)
+  🔒 Privacy  (2 settings)
+  🔧 Misc  (4 settings)
+
+Use 'macfig list <category>' to view settings.
+
+$ macfig list dock
+🚢 Dock
+
+  Auto-hide Dock                      0 -> recommended: true
+    Automatically hide and show the Dock  (com.apple.dock autohide)
+  Auto-hide delay                     0 -> recommended: 0
+    Delay before Dock auto-hides (seconds)  (com.apple.dock autohide-delay)
+  Show recent apps                    0 -> recommended: false
+    Show recent applications in the Dock  (com.apple.dock show-recents)
 ```
 
 ### lanchr — Launch Agent & Daemon Manager
@@ -89,10 +148,22 @@ List, diagnose, create, and manage launchd services without wrestling with plist
 
 ```
 $ lanchr doctor
-2 broken plists found
-1 orphaned agent (binary missing)
+DOCTOR REPORT
+=============
 
-$ lanchr create -l com.me.backup -p ~/scripts/backup.sh --template interval --interval 3600
+CRITICAL (6)
+  [!] com.apple.cvmsCompAgent_arm64_1: binary not found at /System/Library/...
+      Suggestion: Remove or update the plist to point to a valid binary
+  [!] com.apple.menuextra.battery.helper: binary not found at /System/Library/...
+      Suggestion: Remove or update the plist to point to a valid binary
+  [!] com.apple.knowledgeconstructiond: last exit status: -9
+      Suggestion: Check logs for the service to diagnose the crash
+
+WARNING (71)
+  [~] com.apple.akd: duplicate label found in 2 plists
+      Suggestion: Remove duplicate plists or use unique labels
+
+Run 'lanchr list' to see all services.
 ```
 
 ## Skills
