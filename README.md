@@ -81,23 +81,23 @@ WiFi Information
 
 ### [macbroom](https://github.com/lu-zhengda/macbroom) — System Cleanup
 
-Scan for reclaimable disk space across system caches, Xcode, Docker, node_modules, and more. Results are colored and sorted by size (largest first). Supports `--exclude` patterns and per-category scheduled cleanup.
+Scan for reclaimable disk space across system caches, Xcode, Docker, node_modules, and more. Results are colored and sorted by size with risk breakdown, scan diff tracking, JSON output (`--json`), and config validation.
 
 ```
 $ macbroom scan
 Scanning...
 
-System Junk (8.2 GB, 130 items)
-Go (2.2 GB, 2 items)
-Homebrew (2.1 GB, 117 items)
-Browser Cache (1.8 GB, 3 items)
-Node.js (453.0 MB, 1 items)
-Xcode Junk (558.4 KB, 6 items)
-Docker (0 B, 1 items)
+System Junk (8.2 GB, 130 items)  +1.2 GB
+Homebrew (2.1 GB, 117 items)  -200.0 MB
+Browser Cache (1.8 GB, 3 items)  (new)
+Node.js (453.0 MB, 1 items)  unchanged
 
-Total reclaimable: 14.7 GB
+Total reclaimable: 12.5 GB
+Safe: 4.0 GB (32%)  Moderate: 8.0 GB (64%)  Risky: 500.0 KB (4%)
++2.8 GB since Feb 13
 
-$ macbroom scan --system --exclude "~/Library/Caches/com.important.app"
+$ macbroom scan --system --json
+$ macbroom config validate
 ```
 
 ### [updater](https://github.com/lu-zhengda/updater) — App Update Manager
