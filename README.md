@@ -34,15 +34,18 @@ brew install macfig netwhiz whport lanchr macbroom updater
 
 ## Skills
 
-The plugin provides 6 tool-specific skills that activate automatically when relevant, plus 3 cross-tool workflow skills.
+6 skills that activate automatically when Claude detects relevant context (e.g., asking "what's using port 3000?" triggers the whport skill).
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `/system-health` | Run full macOS system health check |
-| `/dev-setup` | Configure macOS for development |
-| `/network-debug` | Diagnose network issues |
+| Command | Tool | Description |
+|---------|------|-------------|
+| `/cleanup` | macbroom | Scan for reclaimable disk space |
+| `/updates` | updater | Check for available app updates |
+| `/ports` | whport | List processes listening on ports |
+| `/services` | lanchr | Diagnose broken launch agents/daemons |
+| `/network` | netwhiz | Show network overview and status |
+| `/defaults` | macfig | Browse and manage hidden defaults |
 
 ## License
 
