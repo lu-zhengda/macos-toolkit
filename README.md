@@ -24,7 +24,7 @@ brew install macfig netwhiz whport lanchr macbroom updater pstop macdog bltctl
 
 ## Tools
 
-### whport — Port & Process Manager
+### [whport](https://github.com/lu-zhengda/whport) — Port & Process Manager
 
 Find what's listening on any port, get detailed process info, and kill processes by port.
 
@@ -47,7 +47,7 @@ Memory:      116.0 MB (RSS)
 Parent PID:  1
 ```
 
-### netwhiz — Network Diagnostics
+### [netwhiz](https://github.com/lu-zhengda/netwhiz) — Network Diagnostics
 
 Full network overview, WiFi signal analysis, DNS management, speed tests, and LAN scanning.
 
@@ -79,7 +79,7 @@ WiFi Information
   Country:       US
 ```
 
-### macbroom — System Cleanup
+### [macbroom](https://github.com/lu-zhengda/macbroom) — System Cleanup
 
 Scan for reclaimable disk space across system caches, Xcode, Docker, node_modules, and more.
 
@@ -98,7 +98,7 @@ Docker (0 B, 1 items)
 Total reclaimable: 14.7 GB
 ```
 
-### updater — App Update Manager
+### [updater](https://github.com/lu-zhengda/updater) — App Update Manager
 
 Check for outdated apps, update individually or in bulk, pin versions, and rollback.
 
@@ -112,7 +112,7 @@ Code                  1.109.3        1.109.2        github     ok
 Xcode                 26.2           26.2           app store  ok
 ```
 
-### macfig — macOS Defaults Manager
+### [macfig](https://github.com/lu-zhengda/macfig) — macOS Defaults Manager
 
 Browse and change hidden macOS preferences with presets for common developer setups.
 
@@ -142,7 +142,7 @@ $ macfig list dock
     Show recent applications in the Dock  (com.apple.dock show-recents)
 ```
 
-### lanchr — Launch Agent & Daemon Manager
+### [lanchr](https://github.com/lu-zhengda/lanchr) — Launch Agent & Daemon Manager
 
 List, diagnose, create, and manage launchd services without wrestling with plist XML.
 
@@ -166,60 +166,49 @@ WARNING (71)
 Run 'lanchr list' to see all services.
 ```
 
-### pstop — Process Explorer
+### [pstop](https://github.com/lu-zhengda/pstop) — Process Explorer
 
 Browse, search, and manage processes with a developer-friendly CLI.
 
 ```
-$ pstop top -n 5
-PID    NAME           CPU%    MEM       USER
-1234   node           45.2%   512.0 MB  user
-5678   Chrome         12.3%   1.2 GB    user
-9012   Xcode          8.7%    2.1 GB    user
-3456   docker         5.1%    384.0 MB  user
-7890   Terminal       2.3%    128.0 MB  user
-
-$ pstop dev
-Node.js (3 processes, 612 MB)
-Docker (5 processes, 1.2 GB)
-Python (1 process, 45 MB)
+$ pstop top --n 5
+PID    NAME          USER           CPU%  MEM%  STATE  COMMAND
+5647   claude        user           50.2  8.6   S+     claude
+612    iTerm2        user           40.8  4.1   S      /Applications/iTerm.app/Contents/MacOS/iTerm2
+382    WindowServer  _windowserver  39.5  1.7   Ss     /System/Library/PrivateFrameworks/...
+21635  claude        user           27.0  14.3  S+     claude
+71898  Magnet        user           14.1  0.7   S      /Applications/Magnet.app/Contents/MacOS/Magnet
 ```
 
-### macdog — Security & Privacy Suite
+### [macdog](https://github.com/lu-zhengda/macdog) — Security & Privacy Suite
 
 Audit your security posture, manage firewall rules, review privacy permissions, and harden your system.
 
 ```
 $ macdog audit
-macOS Security Audit
-====================
+Security Grade: B (75/100)
 
-Grade: B
-
-[PASS] FileVault disk encryption is enabled
-[PASS] System Integrity Protection is enabled
-[FAIL] Firewall is disabled
-[PASS] Gatekeeper is enabled
-[FAIL] Remote Login (SSH) is enabled
-[PASS] Screen lock is enabled
+CHECK                        STATUS
+-----                        ------
+System Integrity Protection  enabled
+Firewall                     off
+FileVault                    on
+Gatekeeper                   enabled
+Remote Login                 off
 ```
 
-### bltctl — Bluetooth Manager
+### [bltctl](https://github.com/lu-zhengda/bltctl) — Bluetooth Manager
 
 Browse, connect, and manage Bluetooth devices with battery monitoring and diagnostics.
 
 ```
 $ bltctl list
-NAME                TYPE        CONNECTED  BATTERY
-AirPods Pro         Headphones  Yes        85%
-Magic Keyboard      Keyboard    Yes        62%
-Magic Trackpad      Trackpad    Yes        91%
-Old Headphones      Headphones  No         -
-
-$ bltctl battery
-AirPods Pro         85%
-Magic Keyboard      62%
-Magic Trackpad      91%
+STATUS  NAME                  TYPE        ADDRESS            BATTERY
+●       Headphones            Headphones  70:F9:4A:7A:8B:CA  -
+○       AirPods               Headphones  98:DD:60:D2:4C:FF  -
+○       AirPods Pro           Headphones  74:15:F5:4E:D0:50  [██████████] 100%
+○       Beats Flex            Headphones  A8:91:3D:DE:91:C6  -
+○       Beats Studio Buds     Headphones  F4:34:F0:96:DD:A0  [██████████] 100%
 ```
 
 ## Skills
