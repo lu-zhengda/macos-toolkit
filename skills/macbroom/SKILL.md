@@ -2,21 +2,16 @@
 name: macbroom
 description: This skill should be used when the user asks to "clean up Mac", "free disk space", "remove system caches", "find duplicate files", "uninstall an app completely", "visualize disk usage", "clean Xcode caches", "remove node_modules", "clean Docker", "schedule cleanup", or mentions macbroom, system cleanup, disk space, junk files, or cache clearing.
 version: 1.0.0
+allowed-tools: Bash(macbroom:*)
 ---
 
 # macbroom — macOS Cleanup Tool
 
-## Overview
+Scan for reclaimable disk space:
 
-macbroom scans and cleans system junk, developer caches, browser data, and more. It supports 12 scanner categories, duplicate detection, app uninstallation, disk visualization, and scheduled cleaning.
+!`macbroom scan 2>&1 || echo "macbroom not installed — brew install lu-zhengda/tap/macbroom"`
 
-## Availability
-
-```bash
-command -v macbroom >/dev/null || echo "NOT INSTALLED"
-```
-
-If not installed: `brew install lu-zhengda/tap/macbroom`
+Analyze the scan results above. Present a summary of reclaimable space by category. Then ask which categories to clean, or if the user wants to clean all. Use `macbroom clean --dry-run` first to preview, then `macbroom clean` to execute.
 
 ## Commands
 

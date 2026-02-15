@@ -2,21 +2,17 @@
 name: netwhiz
 description: This skill should be used when the user asks to "diagnose network issues", "check WiFi signal", "change DNS server", "run speed test", "trace route", "scan local network", "check IP address", "flush DNS", "find network devices", or mentions netwhiz, network diagnostics, WiFi troubleshooting, or DNS configuration.
 version: 1.0.0
+allowed-tools: Bash(netwhiz:*)
+argument-hint: [target-host]
 ---
 
 # netwhiz — Network Diagnostics
 
-## Overview
+Show network overview:
 
-netwhiz is a network diagnostics Swiss-army-knife for macOS. It combines IP info, WiFi analysis, DNS management, ping, traceroute, speed testing, and LAN scanning into one tool.
+!`netwhiz info 2>&1 || echo "netwhiz not installed — brew install lu-zhengda/tap/netwhiz"`
 
-## Availability
-
-```bash
-command -v netwhiz >/dev/null || echo "NOT INSTALLED"
-```
-
-If not installed: `brew install lu-zhengda/tap/netwhiz`
+Analyze the output above. Summarize connection status, IP, gateway, DNS, and public IP. If anything looks wrong, run additional diagnostics: `netwhiz wifi` for signal quality, `netwhiz dns` for DNS health, `netwhiz ping <host>` for connectivity. If a target host was provided ($ARGUMENTS), test connectivity to it.
 
 ## Commands
 
@@ -34,8 +30,6 @@ If not installed: `brew install lu-zhengda/tap/netwhiz`
 | `netwhiz scan` | ARP scan to discover LAN devices | `netwhiz scan` |
 
 ## DNS Presets
-
-Use preset names with `dns set` instead of raw IPs:
 
 | Preset | Servers |
 |--------|---------|

@@ -2,21 +2,16 @@
 name: whport
 description: This skill should be used when the user asks to "check what's on a port", "find port listeners", "kill process on port", "free up a port", "check port conflicts", "monitor ports", "which process is using port", or mentions whport, port management, lsof, or process killing by port number.
 version: 1.0.0
+allowed-tools: Bash(whport:*)
 ---
 
 # whport — Port & Process Manager
 
-## Overview
+List all processes listening on ports:
 
-whport manages ports and their associated processes on macOS. It lists listeners, shows detailed process info, kills by port, and monitors in real-time.
+!`whport list 2>&1 || echo "whport not installed — brew install lu-zhengda/tap/whport"`
 
-## Availability
-
-```bash
-command -v whport >/dev/null || echo "NOT INSTALLED"
-```
-
-If not installed: `brew install lu-zhengda/tap/whport`
+Analyze the output above. Flag any unexpected listeners on common ports (80, 443, 3000, 5432, 6379, 8080, 27017). For each listener, explain what the process likely is. Offer to get more details with `whport info <port>` or kill with `whport kill <port>`.
 
 ## Commands
 
@@ -47,15 +42,6 @@ whport info 8080 --json
 - **Always `info` before `kill`**: Check what process owns the port before terminating
 - **Prefer SIGTERM (default)**: Allows graceful shutdown. Only use `--force` (SIGKILL) as last resort
 - **Verify after kill**: Run `whport list --port <n>` to confirm port is freed
-
-## Common Scenarios
-
-**Port conflict during development:**
-```bash
-whport info 3000        # See what's using port 3000
-whport kill 3000        # Gracefully stop it
-whport list --port 3000 # Verify it's free
-```
 
 ## TUI Mode
 
