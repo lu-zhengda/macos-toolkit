@@ -21,7 +21,7 @@ brew tap lu-zhengda/tap
 brew install macfig netwhiz whport lanchr macbroom updater
 ```
 
-## Tools
+## CLI Tools
 
 | Tool | Purpose |
 |------|---------|
