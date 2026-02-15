@@ -1,7 +1,7 @@
 ---
 name: lanchr
-description: This skill should be used when the user asks to "manage launch agents", "create a launchd service", "debug a daemon", "view service logs", "enable or disable a service", "check broken plists", "schedule a task with launchd", "list running services", "restart a service", or mentions lanchr, launchd, launchctl, plist, launch agent, or launch daemon.
-version: 1.0.0
+description: This skill should be used when the user asks to "manage launch agents", "create a launchd service", "debug a daemon", "view service logs", "enable or disable a service", "check broken plists", "schedule a task with launchd", "list running services", "restart a service", "create a monitoring agent", "export a launch agent", "import a launch agent", or mentions lanchr, launchd, launchctl, plist, launch agent, launch daemon, monitor template, or agent bundle.
+version: 1.1.0
 allowed-tools: Bash(lanchr:*)
 ---
 
@@ -31,6 +31,8 @@ Analyze the output above. Report broken plists, orphaned agents, and missing bin
 | `lanchr doctor` | Diagnose broken plists and orphaned agents | `lanchr doctor` |
 | `lanchr create` | Scaffold a new plist from template | See below |
 | `lanchr edit <label>` | Open plist in $EDITOR | `lanchr edit com.example.myapp` |
+| `lanchr export <label> [file]` | Export agent as portable bundle | `lanchr export com.me.backup agent.json` |
+| `lanchr import <file>` | Import agent bundle | `lanchr import agent.json` |
 
 ## Creating Launch Agents
 
@@ -54,6 +56,36 @@ lanchr create -l com.me.watcher -p /usr/local/bin/process.sh --template watcher
 ```
 
 Additional flags: `--stdout <path>`, `--stderr <path>`, `--env KEY=VAL`, `--load` (bootstrap after creation).
+
+## Monitor Templates
+
+Pre-built templates that use toolkit tools for system monitoring:
+
+```bash
+# CPU/memory threshold monitoring (uses pstop)
+lanchr create -l com.me.cpu-monitor -p pstop --template monitor-cpu
+
+# Port listener monitoring (uses whport)
+lanchr create -l com.me.port-monitor -p whport --template monitor-ports
+
+# Security score monitoring (uses macdog)
+lanchr create -l com.me.sec-monitor -p macdog --template monitor-security
+
+# Disk space monitoring (uses macbroom)
+lanchr create -l com.me.disk-monitor -p macbroom --template monitor-disk
+```
+
+## Agent Portability
+
+Export and import agent bundles for backup or migration:
+
+```bash
+# Export agent with all config
+lanchr export com.me.backup backup-agent.json
+
+# Import on another machine
+lanchr import backup-agent.json
+```
 
 ## Diagnostic Workflow
 
