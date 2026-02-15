@@ -1,7 +1,7 @@
 ---
 name: pstop
-description: This skill should be used when the user asks to "show running processes", "find what's using CPU", "check memory usage", "kill a process", "show process tree", "find developer processes", "watch a process", "what's draining battery", "search for a process", or mentions pstop, process management, top, htop, activity monitor, or resource hogs.
-version: 1.0.0
+description: This skill should be used when the user asks to "show running processes", "find what's using CPU", "check memory usage", "kill a process", "show process tree", "find developer processes", "watch a process", "what's draining battery", "search for a process", "alert on high CPU", "alert on high memory", "show CPU sparklines", or mentions pstop, process management, top, htop, activity monitor, resource hogs, or threshold alerting.
+version: 1.1.0
 allowed-tools: Bash(pstop:*)
 ---
 
@@ -21,6 +21,7 @@ Analyze the output above. Flag any processes consuming excessive CPU (>50%) or m
 | `pstop list --user <name>` | Filter by user | `pstop list --user root` |
 | `pstop top` | Show top N processes by CPU | `pstop top -n 20` |
 | `pstop top --battery` | Highlight battery-draining processes | `pstop top --battery` |
+| `pstop top --format spark` | Show CPU/mem sparkline trends | `pstop top --format spark` |
 | `pstop find <query>` | Search processes by name or command | `pstop find node` |
 | `pstop info <pid>` | Detailed process info (files, ports, children) | `pstop info 1234` |
 | `pstop kill <pid>` | Kill process (SIGTERM) | `pstop kill 1234` |
@@ -28,6 +29,31 @@ Analyze the output above. Flag any processes consuming excessive CPU (>50%) or m
 | `pstop tree` | Display process tree | `pstop tree` |
 | `pstop dev` | Group processes by dev stack (Node, Python, Docker, etc.) | `pstop dev` |
 | `pstop watch <pid>` | Live-monitor a process | `pstop watch 1234 --interval 5` |
+| `pstop watch --alert` | Threshold-based alerting | `pstop watch --alert --cpu 80 --mem 90` |
+
+## Threshold Alerting
+
+Monitor processes and alert when thresholds are exceeded:
+
+```bash
+# Alert when any process exceeds 80% CPU or 90% memory
+pstop watch --alert --cpu 80 --mem 90
+
+# Exit code 1 when thresholds exceeded — useful in scripts and lanchr agents
+pstop watch --alert --cpu 95 --mem 95
+```
+
+Combine with `lanchr create --template monitor-cpu` to set up persistent alerting.
+
+## Sparkline Format
+
+View inline CPU/memory trend history:
+
+```bash
+pstop top --format spark
+```
+
+Renders compact sparkline graphs alongside each process, showing resource usage over time.
 
 ## Sort Options
 

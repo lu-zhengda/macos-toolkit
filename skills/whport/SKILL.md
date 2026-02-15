@@ -1,7 +1,7 @@
 ---
 name: whport
-description: This skill should be used when the user asks to "check what's on a port", "find port listeners", "kill process on port", "free up a port", "check port conflicts", "monitor ports", "which process is using port", or mentions whport, port management, lsof, or process killing by port number.
-version: 1.0.0
+description: This skill should be used when the user asks to "check what's on a port", "find port listeners", "kill process on port", "free up a port", "check port conflicts", "monitor ports", "which process is using port", "alert on new port listeners", "port history", "port timeline", or mentions whport, port management, lsof, process killing by port number, port monitoring, or port alerting.
+version: 1.1.0
 allowed-tools: Bash(whport:*)
 ---
 
@@ -27,6 +27,32 @@ Analyze the output above. Flag any unexpected listeners on common ports (80, 443
 | `whport kill <port> --force` | Force kill (SIGKILL) | `whport kill 3000 --force` |
 | `whport kill <port> --signal <sig>` | Custom signal | `whport kill 3000 --signal SIGHUP` |
 | `whport watch` | Live auto-refresh port table | `whport watch --interval 5` |
+| `whport watch --alert` | Alert on new port listeners | `whport watch --alert` |
+| `whport history` | Port open/close timeline | `whport history` |
+
+## Port Alerting
+
+Monitor for new port listeners and alert immediately:
+
+```bash
+# Watch for any new port listeners
+whport watch --alert
+
+# Combine with interval
+whport watch --alert --interval 10
+```
+
+Combine with `lanchr create --template monitor-ports` for persistent port monitoring.
+
+## Port History
+
+View a timeline of port open/close events:
+
+```bash
+whport history
+```
+
+Useful for tracking when services start and stop, debugging intermittent port conflicts.
 
 ## JSON Output
 
@@ -35,6 +61,7 @@ Add `--json` to any command for machine-readable output:
 ```bash
 whport list --json
 whport info 8080 --json
+whport history --json
 ```
 
 ## Safety Guidelines

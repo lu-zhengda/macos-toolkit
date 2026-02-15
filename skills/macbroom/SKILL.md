@@ -1,7 +1,7 @@
 ---
 name: macbroom
-description: This skill should be used when the user asks to "clean up Mac", "free disk space", "remove system caches", "find duplicate files", "uninstall an app completely", "visualize disk usage", "clean Xcode caches", "remove node_modules", "clean Docker", "schedule cleanup", or mentions macbroom, system cleanup, disk space, junk files, or cache clearing.
-version: 1.0.0
+description: This skill should be used when the user asks to "clean up Mac", "free disk space", "remove system caches", "find duplicate files", "uninstall an app completely", "visualize disk usage", "clean Xcode caches", "remove node_modules", "clean Docker", "schedule cleanup", "cleanup report", "watch disk space", "monitor free space", "filter by size", or mentions macbroom, system cleanup, disk space, junk files, cache clearing, disk monitoring, or cleanup history.
+version: 1.1.0
 allowed-tools: Bash(macbroom:*)
 ---
 
@@ -19,6 +19,7 @@ Analyze the scan results above. Present a summary of reclaimable space by catego
 |---------|---------|---------|
 | `macbroom scan` | Scan for reclaimable space | `macbroom scan` |
 | `macbroom scan --<category>` | Scan specific category | `macbroom scan --xcode --docker` |
+| `macbroom scan --threshold N` | Only show items above size threshold | `macbroom scan --threshold 100M` |
 | `macbroom clean` | Clean scanned junk files | `macbroom clean --dry-run` |
 | `macbroom clean --permanent` | Delete permanently (skip Trash) | `macbroom clean --permanent -y` |
 | `macbroom uninstall <app>` | Fully uninstall app + related files | `macbroom uninstall Slack` |
@@ -27,9 +28,56 @@ Analyze the scan results above. Present a summary of reclaimable space by catego
 | `macbroom spacelens -i` | Interactive disk space explorer | `macbroom spacelens -i` |
 | `macbroom dupes [dirs...]` | Find duplicate files | `macbroom dupes ~/Documents` |
 | `macbroom stats` | Show cleanup history | `macbroom stats` |
+| `macbroom report` | Cleanup history report | `macbroom report` |
+| `macbroom watch` | Monitor free disk space | `macbroom watch --free 10G` |
 | `macbroom schedule enable` | Enable scheduled cleaning | `macbroom schedule enable` |
 | `macbroom schedule disable` | Disable scheduled cleaning | `macbroom schedule disable` |
 | `macbroom schedule status` | Show schedule status | `macbroom schedule status` |
+
+## Size Filtering
+
+Filter scan results to only show items above a threshold:
+
+```bash
+# Only items larger than 100 MB
+macbroom scan --threshold 100M
+
+# Combine with category
+macbroom scan --docker --threshold 500M
+```
+
+## Disk Space Monitoring
+
+Watch free disk space and alert when it drops below a threshold:
+
+```bash
+# Alert when free space drops below 10 GB
+macbroom watch --free 10G
+```
+
+Combine with `lanchr create --template monitor-disk` for persistent disk monitoring.
+
+## Cleanup Reports
+
+View cleanup history and trends:
+
+```bash
+macbroom report
+```
+
+Shows total space reclaimed, cleanup frequency, and category breakdown over time.
+
+## JSON Output
+
+Add `--json` to any read command for machine-readable output:
+
+```bash
+macbroom scan --json
+macbroom dupes ~/Documents --json
+macbroom stats --json
+macbroom spacelens ~ --json
+macbroom report --json
+```
 
 ## Scanner Categories
 
