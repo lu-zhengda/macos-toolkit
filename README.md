@@ -5,7 +5,11 @@ A Claude Code plugin for managing macOS systems with CLI tools.
 ## Install
 
 ```bash
-claude plugin add lu-zhengda/macos-toolkit
+# Add marketplace
+claude plugin marketplace add https://github.com/lu-zhengda/macos-toolkit
+
+# Install plugin
+claude plugin add macos-toolkit@macos-toolkit
 ```
 
 ### Prerequisites
