@@ -1,7 +1,7 @@
 ---
 name: netwhiz
-description: This skill should be used when the user asks to "diagnose network issues", "check WiFi signal", "change DNS server", "run speed test", "trace route", "scan local network", "check IP address", "flush DNS", "find network devices", "speed test history", "monitor WiFi signal", "benchmark DNS", "network diagnosis", "compare DNS providers", or mentions netwhiz, network diagnostics, WiFi troubleshooting, DNS configuration, WiFi monitoring, DNS benchmark, or network diagnosis.
-version: 1.1.0
+description: This skill should be used when the user asks to "diagnose network issues", "check WiFi signal", "change DNS server", "run speed test", "trace route", "scan local network", "check IP address", "flush DNS", "find network devices", "speed test history", "monitor WiFi signal", "benchmark DNS", "network diagnosis", "compare DNS providers", "connect VPN", "disconnect VPN", "VPN status", "network events", "WiFi disconnect history", "IP change log", or mentions netwhiz, network diagnostics, WiFi troubleshooting, DNS configuration, WiFi monitoring, DNS benchmark, network diagnosis, VPN management, or network events.
+version: 1.2.0
 allowed-tools: Bash(netwhiz:*)
 argument-hint: [target-host]
 ---
@@ -32,6 +32,49 @@ Analyze the output above. Summarize connection status, IP, gateway, DNS, and pub
 | `netwhiz speed --history` | Show speed test history and trends | `netwhiz speed --history` |
 | `netwhiz scan` | ARP scan to discover LAN devices | `netwhiz scan` |
 | `netwhiz diagnose` | Comprehensive network diagnosis | `netwhiz diagnose` |
+| `netwhiz vpn` | List configured VPN connections with status | `netwhiz vpn` |
+| `netwhiz vpn connect <name>` | Connect to VPN | `netwhiz vpn connect "Office VPN"` |
+| `netwhiz vpn disconnect [name]` | Disconnect VPN (specific or all) | `netwhiz vpn disconnect` |
+| `netwhiz vpn status [name]` | Detailed VPN connection info | `netwhiz vpn status "Office VPN"` |
+| `netwhiz events` | Network change events: WiFi drops, IP changes, DNS changes | `netwhiz events --last 24h` |
+
+## VPN Management
+
+List, connect, and disconnect VPN connections:
+
+```bash
+# List all configured VPNs and their status
+netwhiz vpn
+
+# Connect to a VPN
+netwhiz vpn connect "Office VPN"
+
+# Check detailed VPN status
+netwhiz vpn status "Office VPN"
+
+# Disconnect a specific VPN
+netwhiz vpn disconnect "Office VPN"
+
+# Disconnect all active VPNs
+netwhiz vpn disconnect
+```
+
+## Network Events
+
+View network change events from the system log:
+
+```bash
+# Show recent network events
+netwhiz events
+
+# Filter to last 24 hours
+netwhiz events --last 24h
+
+# JSON output for scripting
+netwhiz events --json
+```
+
+Tracks WiFi drops, IP address changes, DNS changes, and interface state transitions.
 
 ## Auto-Diagnose
 
@@ -89,6 +132,9 @@ netwhiz ping 8.8.8.8 --json
 netwhiz trace example.com --json
 netwhiz diagnose --json
 netwhiz dns benchmark --json
+netwhiz vpn --json
+netwhiz vpn status "Office VPN" --json
+netwhiz events --json
 ```
 
 ## DNS Presets
