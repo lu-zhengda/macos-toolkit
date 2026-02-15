@@ -183,7 +183,7 @@ Each tool is exposed as a skill that auto-triggers from natural language and is 
 
 - **macOS** (tested on Sonoma and Sequoia)
 - **Claude Code** with plugin support
-- **Homebrew** for installing the CLI tools
+- **[Homebrew](https://github.com/lu-zhengda/homebrew-tap)** for installing the CLI tools
 
 ## License
 
