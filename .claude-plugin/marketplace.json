@@ -10,14 +10,14 @@
     {
       "name": "macos-toolkit",
       "source": "./",
-      "description": "Skills for managing macOS systems with macfig, netwhiz, whport, lanchr, macbroom, updater, pstop, macdog, and bltctl CLI tools",
+      "description": "Skills for managing macOS systems with macfig, netwhiz, whport, lanchr, macbroom, updater, pstop, macdog, bltctl, macctl, and termail CLI tools",
       "author": {
         "name": "lu-zhengda"
       },
       "homepage": "https://github.com/lu-zhengda/macos-toolkit",
       "repository": "https://github.com/lu-zhengda/macos-toolkit",
       "license": "MIT",
-      "keywords": ["macos", "system", "cleanup", "network", "defaults", "launchd", "process", "security", "bluetooth"]
+      "keywords": ["macos", "system", "cleanup", "network", "defaults", "launchd", "process", "security", "bluetooth", "email", "gmail"]
     }
   ]
 }
