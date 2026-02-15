@@ -2,21 +2,16 @@
 name: lanchr
 description: This skill should be used when the user asks to "manage launch agents", "create a launchd service", "debug a daemon", "view service logs", "enable or disable a service", "check broken plists", "schedule a task with launchd", "list running services", "restart a service", or mentions lanchr, launchd, launchctl, plist, launch agent, or launch daemon.
 version: 1.0.0
+allowed-tools: Bash(lanchr:*)
 ---
 
 # lanchr — Launch Agent & Daemon Manager
 
-## Overview
+Diagnose launch agent and daemon health:
 
-lanchr manages macOS launchd services (agents and daemons). It lists, inspects, creates, enables/disables, and diagnoses services across user, global, and system domains.
+!`lanchr doctor 2>&1 || echo "lanchr not installed — brew install lu-zhengda/tap/lanchr"`
 
-## Availability
-
-```bash
-command -v lanchr >/dev/null || echo "NOT INSTALLED"
-```
-
-If not installed: `brew install lu-zhengda/tap/lanchr`
+Analyze the output above. Report broken plists, orphaned agents, and missing binaries. For each issue, explain the impact and recommend a fix (restart, disable, or remove). Offer to execute fixes.
 
 ## Commands
 

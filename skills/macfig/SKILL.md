@@ -2,23 +2,17 @@
 name: macfig
 description: This skill should be used when the user asks to "change macOS defaults", "configure system preferences", "set hidden settings", "adjust dock speed", "show Finder hidden files", "set keyboard repeat rate", "apply system preset", "backup macOS settings", "restore defaults", "search macOS preferences", or mentions macfig, defaults write, or macOS hidden settings.
 version: 1.0.0
+allowed-tools: Bash(macfig:*)
+argument-hint: [category]
 ---
 
 # macfig — macOS Defaults Manager
 
-## Overview
+Browse macOS hidden defaults:
 
-macfig manages macOS hidden defaults (system preferences not exposed in System Settings). It provides preset bundles, backup/restore, and cross-domain search. All changes take effect immediately with automatic process restart (Dock, Finder, etc.).
+!`macfig list $ARGUMENTS 2>&1 || echo "macfig not installed — brew install lu-zhengda/tap/macfig"`
 
-## Availability
-
-Verify macfig is installed before use:
-
-```bash
-command -v macfig >/dev/null || echo "NOT INSTALLED"
-```
-
-If not installed: `brew install lu-zhengda/tap/macfig`
+Analyze the output above. If showing categories, explain what each controls. If showing settings, explain each and its current value. Offer to change settings or apply presets. Always recommend `macfig backup` before changes.
 
 ## Commands
 
