@@ -1,7 +1,7 @@
 ---
 name: netwhiz
 description: This skill should be used when the user asks to "diagnose network issues", "check WiFi signal", "change DNS server", "run speed test", "trace route", "scan local network", "check IP address", "flush DNS", "find network devices", "speed test history", "monitor WiFi signal", "benchmark DNS", "network diagnosis", "compare DNS providers", "connect VPN", "disconnect VPN", "VPN status", "network events", "WiFi disconnect history", "IP change log", or mentions netwhiz, network diagnostics, WiFi troubleshooting, DNS configuration, WiFi monitoring, DNS benchmark, network diagnosis, VPN management, or network events.
-version: 1.2.0
+version: 1.3.0
 allowed-tools: Bash(netwhiz:*)
 argument-hint: [target-host]
 ---
@@ -36,7 +36,10 @@ Analyze the output above. Summarize connection status, IP, gateway, DNS, and pub
 | `netwhiz vpn connect <name>` | Connect to VPN | `netwhiz vpn connect "Office VPN"` |
 | `netwhiz vpn disconnect [name]` | Disconnect VPN (specific or all) | `netwhiz vpn disconnect` |
 | `netwhiz vpn status [name]` | Detailed VPN connection info | `netwhiz vpn status "Office VPN"` |
-| `netwhiz events` | Network change events: WiFi drops, IP changes, DNS changes | `netwhiz events --last 24h` |
+| `netwhiz events` | Network events: wifi, IP change, DNS change, connection drop, VPN | `netwhiz events` |
+| `netwhiz events --last <duration>` | Filter events by time window | `netwhiz events --last 1h` |
+| `netwhiz events --type <type>` | Filter by event type | `netwhiz events --type connection_drop` |
+| `netwhiz events --json` | JSON output for scripting | `netwhiz events --json` |
 
 ## VPN Management
 
@@ -67,14 +70,34 @@ View network change events from the system log:
 # Show recent network events
 netwhiz events
 
-# Filter to last 24 hours
-netwhiz events --last 24h
+# Filter to last hour
+netwhiz events --last 1h
+
+# Filter by event type
+netwhiz events --type wifi_connect
+netwhiz events --type wifi_disconnect
+netwhiz events --type ip_change
+netwhiz events --type dns_change
+netwhiz events --type path_satisfied
+netwhiz events --type path_unsatisfied
+netwhiz events --type connection_drop
+netwhiz events --type vpn
 
 # JSON output for scripting
 netwhiz events --json
 ```
 
-Tracks WiFi drops, IP address changes, DNS changes, and interface state transitions.
+Event types:
+- **wifi_connect** — WiFi network associations
+- **wifi_disconnect** — WiFi disconnections and drops
+- **ip_change** — IP address changes (DHCP renewal, manual)
+- **dns_change** — DNS server configuration changes
+- **path_satisfied** — Network path becomes available
+- **path_unsatisfied** — Network path becomes unavailable
+- **connection_drop** — Active connection drops
+- **vpn** — VPN connect/disconnect events
+
+> Events are automatically deduplicated — consecutive same-type events within 30s are collapsed with a count.
 
 ## Auto-Diagnose
 

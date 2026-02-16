@@ -1,7 +1,7 @@
 ---
 name: macdog
 description: This skill should be used when the user asks to "run a security audit", "check firewall status", "enable the firewall", "review privacy permissions", "check what apps have camera access", "list login items", "harden my Mac", "check security settings", "revoke app permissions", "auto-fix security issues", "export firewall rules", "import firewall rules", "export privacy permissions", "monitor security score", "security events", "login attempts", "permission changes", "firewall blocks", "app install history", "TCC events", or mentions macdog, macOS security, privacy audit, TCC permissions, system hardening, firewall export, continuous security monitoring, or security event log.
-version: 1.2.0
+version: 1.3.0
 allowed-tools: Bash(macdog:*)
 ---
 
@@ -34,8 +34,11 @@ Analyze the audit results above. Explain the overall security grade and highligh
 | `macdog login remove <item>` | Remove a login item | `macdog login remove "Some App"` |
 | `macdog harden` | Apply security hardening preset | `macdog harden` |
 | `macdog harden --dry-run` | Preview hardening changes | `macdog harden --dry-run` |
-| `macdog events` | Security events from system log | `macdog events --last 24h` |
-| `macdog events --type <type>` | Filter by event type | `macdog events --type auth` |
+| `macdog events` | Security events: auth, tcc, gatekeeper, xprotect, firewall | `macdog events` |
+| `macdog events --last <duration>` | Filter events by time window | `macdog events --last 1h` |
+| `macdog events --type <type>` | Filter by event type | `macdog events --type tcc` |
+| `macdog events --severity <level>` | Filter by minimum severity (info, warning, critical) | `macdog events --severity warning` |
+| `macdog events --json` | JSON output for scripting | `macdog events --json` |
 
 ## Security Events
 
@@ -45,15 +48,19 @@ View security-related events from the system log:
 # Show recent security events
 macdog events
 
-# Filter to last 7 days
-macdog events --last 7d
+# Filter to last hour
+macdog events --last 1h
 
 # Filter by event type
 macdog events --type auth
 macdog events --type tcc
-macdog events --type firewall
 macdog events --type gatekeeper
-macdog events --type install
+macdog events --type xprotect
+macdog events --type firewall
+
+# Filter by minimum severity
+macdog events --severity warning
+macdog events --severity critical
 
 # JSON output for scripting
 macdog events --json
@@ -62,9 +69,13 @@ macdog events --json
 Event types:
 - **auth** — Login attempts, sudo usage, authentication failures
 - **tcc** — TCC permission grants and denials (camera, microphone, etc.)
-- **firewall** — Firewall blocks and connection denials
 - **gatekeeper** — Gatekeeper checks and notarization events
-- **install** — App installs and software updates
+- **xprotect** — XProtect malware detection and remediation events
+- **firewall** — Firewall blocks and connection denials
+
+Severity levels: **info**, **warning**, **critical**
+
+> Events are automatically deduplicated — consecutive same-type events within 30s are collapsed with a count.
 
 ## Auto-Fix Workflow
 

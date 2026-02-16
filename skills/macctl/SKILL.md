@@ -1,7 +1,7 @@
 ---
 name: macctl
 description: This skill should be used when the user asks to "check battery status", "check CPU temperature", "set display brightness", "change screen resolution", "toggle Night Shift", "switch audio output", "set volume", "mute audio", "enable Do Not Disturb", "enable focus mode", "apply deep work preset", "set up for a meeting", "set up for a presentation", "save battery", "check thermal pressure", "what's preventing sleep", "list displays", "list audio devices", "check SSD health", "disk wear", "battery trends", "wake sleep history", "power events", "disk I/O", "SSD wear level", or mentions macctl, power management, display settings, audio routing, focus mode, environment presets, thermal monitoring, Do Not Disturb, disk health, or power events.
-version: 1.1.0
+version: 1.2.0
 allowed-tools: Bash(macctl:*)
 ---
 
@@ -38,7 +38,14 @@ Analyze the output above. Report battery level, charging state, and health. Offe
 
 | Command | Purpose | Example |
 |---------|---------|---------|
-| `macctl events` | Power events from system log: wake/sleep, lid, thermal | `macctl events --last 24h` |
+| `macctl events` | Power-related events: wake, sleep, lid, thermal, power source | `macctl events` |
+| `macctl events --last <duration>` | Filter events by time window | `macctl events --last 1h` |
+| `macctl events --type <type>` | Filter by event type | `macctl events --type wake` |
+| `macctl events --json` | JSON output for scripting | `macctl events --json` |
+
+Event types: **wake**, **sleep**, **lid**, **thermal**, **power_source**
+
+> Events are automatically deduplicated — consecutive same-type events within 30s are collapsed with a count.
 
 ## Commands — Display
 
