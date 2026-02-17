@@ -4,9 +4,9 @@
 [![Platform: macOS](https://img.shields.io/badge/Platform-macOS-lightgrey.svg)](https://github.com/lu-zhengda/macos-toolkit)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-blueviolet.svg)](https://github.com/lu-zhengda/macos-toolkit)
 
-A Claude Code plugin that gives Claude native macOS system management capabilities — network diagnostics, disk cleanup, port management, app updates, launch agents, system defaults, process monitoring, security auditing, Bluetooth management, environment control, and email.
+A Claude Code plugin that gives Claude native macOS system management capabilities — network diagnostics, disk cleanup, app updates, launch agents, system defaults, process monitoring, security auditing, environment control, system health checks, and email.
 
-**Ask Claude naturally:** "What's using port 3000?", "Clean up my Mac", "Check for app updates", "Why is my WiFi slow?", "What's eating my CPU?", "Run a security audit", "Check my AirPods battery", "Set up for a meeting", "Check my email" — and it runs the right tool automatically.
+**Ask Claude naturally:** "Run a health check", "Clean up my Mac", "Check for app updates", "Why is my WiFi slow?", "What's eating my CPU?", "Run a security audit", "Set up for a meeting", "Check my email" — and it runs the right tool automatically.
 
 ## Install
 
@@ -19,33 +19,10 @@ Then install the CLI tools:
 
 ```bash
 brew tap lu-zhengda/tap
-brew install macfig netwhiz whport lanchr macbroom updater pstop macdog bltctl macctl termail
+brew install macfig netwhiz lanchr macbroom updater pstop macdog macctl termail machealth
 ```
 
 ## Tools
-
-### [whport](https://github.com/lu-zhengda/whport) — Port & Process Manager
-
-Find what's listening on any port, get detailed process info, and kill processes by port.
-
-```
-$ whport list
-PORT   PROTO  PID    PROCESS    USER    STATE
-5000   TCP    644    ControlCe  user    LISTEN
-7000   TCP    644    ControlCe  user    LISTEN
-7265   TCP    76742  Raycast    user    LISTEN
-26443  TCP    87971  OrbStack   user    LISTEN
-
-$ whport info 5000
-Port:        5000/TCP
-State:       LISTEN
-Process:     ControlCe (PID 644)
-Command:     /System/Library/CoreServices/ControlCenter.app/Contents/MacOS/ControlCenter
-User:        user
-CPU:         0.0%
-Memory:      116.0 MB (RSS)
-Parent PID:  1
-```
 
 ### [netwhiz](https://github.com/lu-zhengda/netwhiz) — Network Diagnostics
 
@@ -199,20 +176,6 @@ Gatekeeper                   enabled
 Remote Login                 off
 ```
 
-### [bltctl](https://github.com/lu-zhengda/bltctl) — Bluetooth Manager
-
-Browse, connect, and manage Bluetooth devices with battery monitoring and diagnostics.
-
-```
-$ bltctl list
-STATUS  NAME                  TYPE        ADDRESS            BATTERY
-●       Headphones            Headphones  70:F9:4A:7A:8B:CA  -
-○       AirPods               Headphones  98:DD:60:D2:4C:FF  -
-○       AirPods Pro           Headphones  74:15:F5:4E:D0:50  [██████████] 100%
-○       Beats Flex            Headphones  A8:91:3D:DE:91:C6  -
-○       Beats Studio Buds     Headphones  F4:34:F0:96:DD:A0  [██████████] 100%
-```
-
 ### [macctl](https://github.com/lu-zhengda/macctl) — Environment Controller
 
 Manage power, display, audio, focus modes, and apply compound presets from the CLI.
@@ -251,13 +214,32 @@ FROM     SUBJECT                    DATE          ID
 Finance  Q4 Quarterly Report 2025   Jan 10, 2026  19c12345abcdef
 ```
 
+### [machealth](https://github.com/lu-zhengda/machealth) — System Health Checker
+
+Unified health assessment across 8 subsystems (CPU, memory, thermal, disk, battery, iCloud, network, Time Machine) with a single health score and JSON output for AI agent automation.
+
+```
+$ machealth --human
+System Health: 92/100 (green)
+
+  [OK] CPU         load 1.2 / 2.4 / 1.8
+  [OK] Memory      pressure: normal, swap: 0 MB
+  [OK] Thermal     speed limit: 100%, no throttling
+  [OK] Disk        184 GB available (45% used)
+  [OK] Battery     100%, on AC power, healthy
+  [OK] iCloud      synced
+  [OK] Network     reachable via en0
+  [OK] Time Machine last backup: 2h ago
+
+$ machealth diagnose --human
+```
+
 ## Skills
 
 Each tool is exposed as a skill that auto-triggers from natural language and is available as a slash command:
 
 | Skill | Trigger examples | Slash command |
 |-------|-----------------|---------------|
-| **whport** | "what's on port 8080", "kill the process on port 3000" | `/macos-toolkit:whport` |
 | **netwhiz** | "check my WiFi", "run a speed test", "change DNS" | `/macos-toolkit:netwhiz` |
 | **macbroom** | "clean up my Mac", "free disk space", "find duplicates" | `/macos-toolkit:macbroom` |
 | **updater** | "check for updates", "update Firefox", "find unused apps" | `/macos-toolkit:updater` |
@@ -265,9 +247,9 @@ Each tool is exposed as a skill that auto-triggers from natural language and is 
 | **lanchr** | "list launch agents", "create a scheduled task", "debug a daemon" | `/macos-toolkit:lanchr` |
 | **pstop** | "what's eating CPU", "show process tree", "find node processes" | `/macos-toolkit:pstop` |
 | **macdog** | "run security audit", "check firewall", "review privacy permissions" | `/macos-toolkit:macdog` |
-| **bltctl** | "list Bluetooth devices", "check AirPods battery", "fix Bluetooth" | `/macos-toolkit:bltctl` |
 | **macctl** | "check battery", "set brightness", "apply deep-work preset", "mute audio" | `/macos-toolkit:macctl` |
 | **termail** | "check my email", "send an email", "search emails", "reply to email" | `/macos-toolkit:termail` |
+| **machealth** | "run a health check", "is my Mac healthy", "check system health", "diagnose issues" | `/macos-toolkit:machealth` |
 
 ## Prerequisites
 
